@@ -2,7 +2,7 @@
     box-sizing: border-box;
 }
 :root {
-    --primary: #9542f5;
+    --primary: #5e14b3;
     --secondary: #deadde;
     --btntext: white;
 }
@@ -15,7 +15,7 @@ header {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    border-bottom: 5px solid var(--primary);
+    
     align-items: center;
     font-size: 20px;
 }
@@ -24,12 +24,24 @@ header a {
     color: var(--secondary);
 }
 main {
+    border-top: 5px solid var(--primary);
+    border-bottom: 5px solid var(--primary);
     text-align: center;
+    padding: 20px;
 }
 .btn {
     background-color: var(--primary);
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
     color: var(--btntext);
 
+}
+.btn:hover {
+    background-color: var(--secondary);
+    padding: 10px;
+    border-radius: 10px;
+    color: var(--btntext);
+}
+footer {
+    text-align: center;
 }
