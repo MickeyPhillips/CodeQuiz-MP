@@ -2,6 +2,8 @@ var startBtn = document.querySelector('#start');
 var timerEl = document.querySelector('#time');
 var respEl = document.querySelector('#response');
 var highscore = document.querySelector('#high-score');
+var startPg = document.querySelector('#main-content');
+var quizPg = document.querySelector('#quiz-content');
 var questions = [
     {  
         question: "Commonly used data types DO NOT include: ",
@@ -30,51 +32,28 @@ var questions = [
 
     }
 ];
+
+var timeLeft = questions.length * 10;
+
 function quiz() {
-    timer();
-    slides();
-    
-    
-};
-//Timer
-function timer() {
-    var timeLeft = 75;
-    var timeInterval = setInterval(function() {
-        if (timeLeft > 0) {
-            timerEl.textContent = timeLeft;
-            timeLeft--;
-        }
-        else {
+    // Hiding the main-content and showing the quiz-content
+    startPg.classList.add('hidden');
+    quizPg.classList.remove('hidden');
+    // Timer
+    timeInterval = setInterval(function() {
+        timerEl.textContent = timeLeft;
+        timeLeft--;
+        if (timeLeft === 0) {
             timerEl.textContent = 0;
             console.log("Time is 0");
-            clearInterval(timeInterval);
             end()
         }
     }, 1000);
-}
+    
+      
+};
 //slides transitioning from start to questions(also contains the right and wrong) to end
 function slides() {
-    var startPg = document.querySelector(".content");
-    startPg.remove();
-    console.log("Removed starting page");
-    quizContent();
-    
-}
-    
-
-function quizContent() {
-    var quesAnsEl = document.createElement("div");
-    quesAnsEl.className = "quiz-content";
-    for(var i=0; i < questions.length; i++) {
-        var text = document.createElement("h1");
-        text.className = "quiz-text";
-        text.innerHTML = "<h1>" + questions.question + "</h1>";
-        quesAnsEl.appendChild(text);
-    }
-    
-
-    
-    
 }
 //end Enter initials and save highscore
 function end() {

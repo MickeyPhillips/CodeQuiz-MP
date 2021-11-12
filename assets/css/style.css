@@ -45,3 +45,7 @@ main {
 footer {
     text-align: center;
 }
+/* Updated css */
+.hidden {
+    display: none;
+}
