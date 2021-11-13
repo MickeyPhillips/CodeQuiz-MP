@@ -13,7 +13,7 @@
         <p>Time: <span id="time">0</span></p>
     </header>
     <main>
-        <div id="main-content">
+        <div id="start-content">
             <h1>Coding Quiz Challenge</h1>
             <p>
                 Try to answer the following code-related questions within the time limit.
@@ -23,11 +23,18 @@
             <button class="btn" id="start">Start Quiz</button>
         </div>
         <div class="hidden" id="quiz-content">
-            <h1>QUIZ STUFF</h1>
+            <h1 class="dis-question"></h1>
+            <ul class="dis-choices"></ul>
+        </div>
+        <div class="hidden" id="save-score-content">
+            <h1 id="score"></h1>
+        </div>
+        <div class="hidden" id="load-score-content">
+
         </div>
     </main>
     <footer>
-        <h1 id="response"></h1>
+        <h1 class="response hidden"></h1>
     </footer>
     
 

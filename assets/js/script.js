@@ -1,9 +1,11 @@
 var startBtn = document.querySelector('#start');
 var timerEl = document.querySelector('#time');
-var respEl = document.querySelector('#response');
+var respEl = document.querySelector('.response');
 var highscore = document.querySelector('#high-score');
-var startPg = document.querySelector('#main-content');
+var startPg = document.querySelector('#start-content');
 var quizPg = document.querySelector('#quiz-content');
+var index = 0;
+////
 var questions = [
     {  
         question: "Commonly used data types DO NOT include: ",
@@ -12,7 +14,7 @@ var questions = [
     },
     {
         question: "The condition in an if / else statement is enclosed with ________. ",
-        choices: ["quotes",  "curly brackets", "parenthesis", "square brackets"],
+        choices: ["quotes", "curly brackets", "parenthesis", "square brackets"],
         correct: "parenthesis"
     },
     {
@@ -29,13 +31,78 @@ var questions = [
         question: "A very useful tool used during development and debugging for printing content to the debugger is: ",
         choices: ["JavaScript", "terminal/bash", "for loops", "console.log"],
         correct: "console.log"
-
     }
 ];
+////
+var timeLeft = questions.length * 20;
+//
 
-var timeLeft = questions.length * 10;
+function check() {
+    if (this.value !== questions[index].correct){
+        timeLeft -= 10;
+        if (timeLeft < 0){
+            timeLeft = 0;
+        }
+        timerEl.textContent = timeLeft;
+        respEl.classList.remove('hidden');
+        respEl.textContent = "Wrong!";
+        
+    } else {
+        respEl.classList.remove('hidden');
+        respEl.textContent = "Correct!";
+    };
 
-function quiz() {
+    
+    setTimeout(function(){
+        respEl.classList.add('hidden');
+    }, 500);
+
+    index += 1;
+    if(index === questions.length){
+        end();
+    } else {
+        quizQuestions();
+    }
+}
+
+function quizQuestions() {
+    var curQuestion = questions[index];
+
+    var quizEl = document.querySelector('#quiz-content h1');
+    quizEl.textContent = curQuestion.question;
+
+    var choicesEl = document.querySelector('.dis-choices');
+    choicesEl.innerHTML = "";
+
+    for(var i = 0; i < questions.length - 1; i++) {
+        var choice = document.createElement('li');
+        
+        var button = document.createElement('button');
+        button.classList.add('btn', 'btn-ans');
+        button.setAttribute('value', curQuestion.choices[i]);
+        button.textContent = curQuestion.choices[i];
+        button.addEventListener('click', check);
+
+        choice.append(button);
+
+        choicesEl.append(choice);
+    }
+
+}
+//
+function end() {
+    clearInterval(timeInterval);
+    var saveScoreCon = document.querySelector('#save-score-content');
+    saveScoreCon.classList.remove('hidden');
+
+    var finalScore = document.querySelector('#score');
+    finalScore.textContent = timeLeft;
+
+    quizPg.classList.add('hidden');
+    
+}
+//
+function start() {
     // Hiding the main-content and showing the quiz-content
     startPg.classList.add('hidden');
     quizPg.classList.remove('hidden');
@@ -49,17 +116,11 @@ function quiz() {
             end()
         }
     }, 1000);
+    quizQuestions();
     
       
 };
-//slides transitioning from start to questions(also contains the right and wrong) to end
-function slides() {
-}
-//end Enter initials and save highscore
-function end() {
-    console.log("END")
-    saveHighscore();
-}
+//
 //Use localStorage to save the highscore
 function saveHighscore() {
     console.log("Save Highscore");
@@ -67,5 +128,6 @@ function saveHighscore() {
 function loadHighscore() {
     console.log("Highscore");
 }
+////
 highscore.addEventListener("click", loadHighscore);
-startBtn.addEventListener("click", quiz);
+startBtn.addEventListener("click", start);
