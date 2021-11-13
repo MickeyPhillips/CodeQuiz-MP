@@ -1,9 +1,11 @@
 var startBtn = document.querySelector('#start');
 var timerEl = document.querySelector('#time');
 var respEl = document.querySelector('.response');
-var highscore = document.querySelector('#high-score');
 var startPg = document.querySelector('#start-content');
 var quizPg = document.querySelector('#quiz-content');
+var saveBtn = document.querySelector('#save');
+var saveScoreCon = document.querySelector('#save-score-content');
+var loadScoreCon = document.querySelector('#load-score-content');
 var index = 0;
 ////
 var questions = [
@@ -92,7 +94,6 @@ function quizQuestions() {
 //
 function end() {
     clearInterval(timeInterval);
-    var saveScoreCon = document.querySelector('#save-score-content');
     saveScoreCon.classList.remove('hidden');
 
     var finalScore = document.querySelector('#score');
@@ -122,12 +123,47 @@ function start() {
 };
 //
 //Use localStorage to save the highscore
+
 function saveHighscore() {
-    console.log("Save Highscore");
+    var initials = document.querySelector('#name').value.trim();
+    if(initials !== '') {
+        var highscore = JSON.parse(localStorage.getItem('highscore')) || [];
+        var person = {
+            name: initials,
+            score: timeLeft
+        };
+
+        highscore.push(person);
+        localStorage.setItem('highscore', JSON.stringify(highscore));
+
+        loadHighscore();
+    }
 }
+//
 function loadHighscore() {
-    console.log("Highscore");
+    startPg.classList.add('hidden');
+    saveScoreCon.classList.add('hidden');
+    loadScoreCon.classList.remove('hidden');
+
+    var scoresList = document.querySelector('.dis-highscores');
+    var score = JSON.parse(localStorage.getItem('highscore')) || [];
+    score.sort((a,b) => b.score - a.score);
+    for(var i = 0; i < score.length; i++) {
+        var scoreEl = document.createElement('li');
+        scoreEl.textContent = score[i].name + " : " + score[i].score;
+
+        scoresList.append(scoreEl);
+    }
+}
+//
+function clearHighscore() {
+    localStorage.removeItem('highscore');
+    goBack();
+}
+//
+function goBack() {
+    window.location.reload();
 }
 ////
-highscore.addEventListener("click", loadHighscore);
+saveBtn.addEventListener("click", saveHighscore);
 startBtn.addEventListener("click", start);

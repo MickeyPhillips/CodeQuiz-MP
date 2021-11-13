@@ -23,6 +23,9 @@ header a {
     text-decoration: none;
     color: var(--secondary);
 }
+header a:hover {
+    cursor: pointer;
+}
 main {
     border-top: 5px solid var(--primary);
     border-bottom: 5px solid var(--primary);
@@ -34,6 +37,7 @@ main {
     padding: 10px;
     border-radius: 10px;
     color: var(--btntext);
+    cursor: pointer;
 
 }
 .btn:hover {
@@ -51,7 +55,7 @@ footer {
 }
 
 .btn-ans{
-    text-align: left;
+    text-align: center;
     width: 25%;
 }
 
@@ -75,4 +79,8 @@ footer {
     justify-content: flex-start;
     display: flex;
     flex-direction: column;
+}
+
+.dis-highscores {
+    list-style: none;
 }
