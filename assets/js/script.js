@@ -36,7 +36,7 @@ var questions = [
     }
 ];
 ////
-var timeLeft = questions.length * 20;
+var timeLeft = 100;
 //
 
 function check() {
